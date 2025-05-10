@@ -1,3 +1,4 @@
+import os
 from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QMainWindow, QPushButton, QVBoxLayout, QWidget, QLabel, QHBoxLayout, QSystemTrayIcon, QMenu, QAction, QApplication
@@ -102,7 +103,8 @@ class MainView(QMainWindow):
         
 
     def create_system_tray(self):
-        self.tray_icon = QSystemTrayIcon(QIcon("assets/icon.ico"), self)
+        icon_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'assets', 'icon.ico')
+        self.tray_icon = QSystemTrayIcon(QIcon(icon_path), self)
 
         tray_menu = QMenu()
         
@@ -115,8 +117,9 @@ class MainView(QMainWindow):
         QTimer.singleShot(1000, self.show_message)
 
     def show_message(self):
+        icon_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'assets', 'icon.ico')
         self.tray_icon.showMessage(
             "Bienvenido",
             "La aplicación de cifrado y descifrado está en ejecución.",
-            QIcon("assets/icon.ico")
+            QIcon(icon_path)
         )
