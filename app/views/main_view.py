@@ -1,5 +1,7 @@
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QMainWindow, QPushButton, QVBoxLayout, QWidget, QLabel, QHBoxLayout
+from PyQt5.QtCore import Qt, QTimer
+from PyQt5.QtGui import QIcon
+from PyQt5.QtWidgets import QMainWindow, QPushButton, QVBoxLayout, QWidget, QLabel, QHBoxLayout, QSystemTrayIcon, QMenu, QAction, QApplication
+
 
 class MainView(QMainWindow):
     def __init__(self):
@@ -95,3 +97,26 @@ class MainView(QMainWindow):
 
         self.encrypt_button.setCursor(Qt.PointingHandCursor)
         self.decrypt_button.setCursor(Qt.PointingHandCursor)
+        
+        self.create_system_tray()
+        
+
+    def create_system_tray(self):
+        self.tray_icon = QSystemTrayIcon(QIcon("assets/icon.ico"), self)
+
+        tray_menu = QMenu()
+        
+        exit_action = QAction("Salir", self)
+        exit_action.triggered.connect(self.close)
+        tray_menu.addAction(exit_action)
+
+        self.tray_icon.setContextMenu(tray_menu)
+        self.tray_icon.show()
+        QTimer.singleShot(1000, self.show_message)
+
+    def show_message(self):
+        self.tray_icon.showMessage(
+            "Bienvenido",
+            "La aplicación de cifrado y descifrado está en ejecución.",
+            QIcon("assets/icon.ico")
+        )

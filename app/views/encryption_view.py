@@ -2,8 +2,9 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QMainWindow, QPushButton, QVBoxLayout, QWidget, QLabel, QLineEdit
 
 class EncryptionView(QMainWindow):
-    def __init__(self):
+    def __init__(self, main_controller):        
         super().__init__()
+        self.main_controller = main_controller
 
         self.setWindowTitle("Cifrado")
         self.setGeometry(400, 400, 350, 250)
@@ -24,23 +25,39 @@ class EncryptionView(QMainWindow):
 
         self.encrypt_button = QPushButton("Cifrar")
         self.encrypt_button.setStyleSheet("""
-            background-color: #007BFF;
-            color: white;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            font-size: 15px;
+            QPushButton {
+                background-color: #007BFF;
+                color: white;
+                padding: 10px;
+                border: none;
+                border-radius: 5px;
+                font-size: 15px;
+            }
+            QPushButton:hover {
+                background-color: #339CFF;
+            }
+            QPushButton:pressed {
+                background-color: #0056b3;
+            }
         """)
         self.encrypt_button.setCursor(Qt.PointingHandCursor)
 
         self.exit_button = QPushButton("Salir")
         self.exit_button.setStyleSheet("""
-            background-color: #6c757d;
-            color: white;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            font-size: 15px;
+            QPushButton {
+                background-color: #6c757d;
+                color: white;
+                padding: 10px;
+                border: none;
+                border-radius: 5px;
+                font-size: 15px;
+            }
+            QPushButton:hover {
+                background-color: #868e96;
+            }
+            QPushButton:pressed {
+                background-color: #545b62;
+            }
         """)
         self.exit_button.setCursor(Qt.PointingHandCursor)
 
@@ -56,7 +73,7 @@ class EncryptionView(QMainWindow):
         self.error_label.setAlignment(Qt.AlignCenter)
         self.error_label.setStyleSheet("""
             font-size: 13px;
-            color: #721c24;
+            color: red;
         """)
 
         layout.addWidget(self.input_field)
@@ -82,4 +99,5 @@ class EncryptionView(QMainWindow):
         self.input_field.clear()
         self.result_label.setText("")
         self.error_label.setText("")
+        self.main_controller.enable_buttons()
         event.accept()

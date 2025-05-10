@@ -2,8 +2,9 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QMainWindow, QLineEdit, QPushButton, QLabel, QVBoxLayout, QWidget
 
 class DecryptionView(QMainWindow):
-    def __init__(self):
+    def __init__(self, main_controller):
         super().__init__()
+        self.main_controller = main_controller
 
         self.setWindowTitle("Descifrado")
         self.setGeometry(400, 400, 320, 220)
@@ -24,23 +25,39 @@ class DecryptionView(QMainWindow):
 
         self.decrypt_button = QPushButton("Descifrar")
         self.decrypt_button.setStyleSheet("""
-            background-color: #28a745;
-            color: white;
-            padding: 8px;
-            font-size: 15px;
-            border: none;
-            border-radius: 5px;
+            QPushButton {
+                background-color: #28a745;
+                color: white;
+                padding: 8px;
+                font-size: 15px;
+                border: none;
+                border-radius: 5px;
+            }
+            QPushButton:hover {
+                background-color: #43c264;
+            }
+            QPushButton:pressed {
+                background-color: #1e7e34;
+            }
         """)
         self.decrypt_button.setCursor(Qt.PointingHandCursor)
 
         self.exit_button = QPushButton("Salir")
         self.exit_button.setStyleSheet("""
-            background-color: #6c757d;
-            color: white;
-            padding: 8px;
-            font-size: 15px;
-            border: none;
-            border-radius: 5px;
+            QPushButton {
+                background-color: #6c757d;
+                color: white;
+                padding: 8px;
+                font-size: 15px;
+                border: none;
+                border-radius: 5px;
+            }
+            QPushButton:hover {
+                background-color: #868e96;
+            }
+            QPushButton:pressed {
+                background-color: #545b62;
+            }
         """)
         self.exit_button.setCursor(Qt.PointingHandCursor)
 
@@ -82,4 +99,5 @@ class DecryptionView(QMainWindow):
         self.input_field.clear()
         self.result_label.setText("")
         self.error_label.setText("")
+        self.main_controller.enable_buttons()
         event.accept()
